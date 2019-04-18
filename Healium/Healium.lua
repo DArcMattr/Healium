@@ -177,6 +177,7 @@ function Healium_OnLoad(frame)
 	HealiumFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	HealiumFrame:RegisterEvent("SPELLS_CHANGED")
 	HealiumFrame:RegisterEvent("UNIT_HEALTH")
+	HealiumFrame:RegisterEvent("UNIT_MAXHEALTH")
 --	HealiumFrame:RegisterEvent("VARIABLES_LOADED")
 	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_SENT")	
 	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
@@ -1102,7 +1103,7 @@ function Healium_OnEvent(frame, event, ...)
 	-------------------------------------------------------------
 	-- [[ Update Unit Health Display Whenever Their HP Changes ]]
 	-------------------------------------------------------------
-    if (event == "UNIT_HEALTH") or (event == "UNIT_HEAL_PREDICTION") then
+    if (event == "UNIT_HEALTH") or (event == "UNIT_HEAL_PREDICTION") or (event == "UNIT_MAXHEALTH") then
 --		if (not HealiumActive) then return 0 end
 		
 		if Healium_Units[arg1] then
