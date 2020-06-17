@@ -1,5 +1,38 @@
+2.7.1 RETAIL
+* This release is the first public release that also includes source changes from the classic version. Going forward there will be a single source for both classic and retail mod versions. The sole exception being the TOC file will differ between the two, as this is unavoidable as best as I can tell.
+* Updated ToC version number to 80205
+* Fix "No Spell" menu always being checked. This issue was never released since it was an issue with in the classic source.
+
+2.7.0 CLASSIC
+* Due to the structural changes in this update you should re-add any spells that you want to use to Healium by drag and dropping from the spellbook (see below) and also reselect your debuff sound.
+* Removed button configuration from the Healium Configuration Panel and from the Configure Buttons menu. Use Drag and drop from the spellbook onto buttons to configure Healium spells, in Classic from now on.
+* Buttons will remember and use the specific rank of the spell when drag and dropped from the spellbook
+* Fixed always showing tooltips of the lowest rank of spell
+* Spell ranks are shown near the bottom of button tooltips, if tooltips are enabled
+* Fix debuff sounds not playing
+* Removed debuff sounds that don't exist in classic
+
+2.6.4 CLASSIC
+* Added Shaman Healing Wave (classic version) to the default list of spells
+* Fixed incoming heal bar being visible on some frames
+
+2.6.3 CLASSIC
+* Fix LUA errors caused by cures that don't exist in classic
+* Added Paladin Holy Light (classic version) to the default list of spells
+* Removed options to show roles, incoming heals, and threat since classic doesn't support these at all
+
+2.6.2 CLASSIC
+* First release supporting WoW Classic
+
+2.6.1
+* Fix not displaying unit frames after first logging in.
+* Fix LUA errors for priests when Power World: Shield was used on a button
+
+2.6.0
+* Updated for Battle for Azeroth
+
 2.5.9
-* Fix bugs with PlaySound caused by Blizzard api changes in this patch.
+* Fix bugs with PlaySound caused by Blizzard api changes in this patch
 
 2.5.8
 * Updated ToC version number to 70300 for wow 7.3 patch
@@ -16,7 +49,7 @@
  * Added Zen Pulse to the default spell list
  * Added Vivify to the default spell list
  * Added MistWalk to the default spell list
- * Fixed not updating cure states when switching specs.  A result of not dong this was that Monk Detox could improperly show up as curable or not after switching specs.
+ * Fixed not updating cure states when switching specs.  A result of not doing this was that Monk Detox could improperly show up as curable or not after switching specs
 
 2.5.4
 * Druid: Swiftmend is no longer darkened based on if Rejuvination or Regrowth is on the target
@@ -25,20 +58,20 @@
 * Fix LUA errors when on a Paladin, with Cleanse assigned to a button, and party member gets a magic debuf
 
 2.5.2
-* Mage: Removed "Remove Curse" from default spell list, which fixed some LUA errors when playing as a mage.  
-* Paladin: Workaround for "Beacon of Virtue" not allowing drag and drop onto a Healium button. 
+* Mage: Removed "Remove Curse" from default spell list, which fixed some LUA errors when playing as a mage
+* Paladin: Workaround for "Beacon of Virtue" not allowing drag and drop onto a Healium button
 * Added these spells to the default list of spells:
  * Paladin: Cleanse Toxins
  * Paladin: Beacon of Virtue
- 
+
 2.5.1
-* Priest: Now show Atonement buff 
+* Priest: Now show Atonement buff
 * Priest: Removed Holy Word: Chastise from the default list of spells
 * Added these spells to the default list of spells:
  * Priest: Plea
  * Priest: Shadow Mend.
- * Priest: Holy Word: Serenity	
- 
+ * Priest: Holy Word: Serenity
+
 2.5.0
 * Updated ToC version number to 70000 for Legion pre-patch release
 * Fix issues with spec swapping in Legion pre-patch
@@ -47,7 +80,7 @@
 * Added "Clarity of Will" spell to default list of priest spells
 
 2.4.0
-* Added Healers and Damagers Frames.  These frames shows the players in the raid or party matching the Healers or Damagers roles.
+* Added Healers and Damagers Frames.  These frames shows the players in the raid or party matching the Healers or Damagers roles
 * Tanks frame now uses Tank role.
 
 2.3.2
@@ -58,7 +91,7 @@
 * Paladin "Eternal Flame" will show up as a buff on a player now
 
 2.3.0
-* Replaced all use of Blizzard's drop down menu system with the NoTaint UIDropDownMenu library to remove taint.
+* Replaced all use of Blizzard's drop down menu system with the NoTaint UIDropDownMenu library to remove taint
 
 2.2.2
 * Fixed debuff warning sounds not being played after wow 6.1 patch
@@ -77,12 +110,12 @@
 * Changed "Close" on the Healium Menu to "Close Menu" to remove ambiguity
 * Removed the default spells that were removed in the Warloads of Draenor pre-patch release.  This won't have a noticeable impact, but saves a bit of memory and improves the code quality.
 * Added these spells to the default list of spells
- * Druid: Cenarion Ward 
+ * Druid: Cenarion Ward
  * Shaman: Unleash Life
 * Fixed activating debuff warnings for magic based debuffs for Paladins and Monks due to Warloads of Draenor changes
 * Fixed activating the debuff warning sound when the debuff was on yourself
 
- 
+
 2.1.15
 * Updated ToC version number to 60000 for Warloads of Draenor pre-patch release
 
@@ -94,7 +127,7 @@
  * Shaman: Ancestral Spirit
  * Paladin: Redemption
  * Death Knight: Raise Ally
- 
+
 2.1.13
 * Temporary workaround for Blizzard 5.4.1 taint bug.
 
@@ -117,14 +150,14 @@
 
 2.1.7
 * Update for wow 5.1 patch
-* Monk - "Detox" now triggers cure magic logic only if it can actually cure magic 
+* Monk - "Detox" now triggers cure magic logic only if it can actually cure magic
 * Fix lua errors relating to cooldowns after 5.1 patch
 
-2.1.6 
+2.1.6
 * Priest - Added "Dispel Magic" as a default spell, and configured it for curing
 * Fix LUA errors regarding invalid health values
-* Fixed some issues caused by dynamic spells during combat.  E.g. Balance Druid changing "Hurricane" into "Astral Storm" during "Lunar Eclipse", 
-  resulting in tooltips for some spells showing as different spells, and getting other invalid states 
+* Fixed some issues caused by dynamic spells during combat.  E.g. Balance Druid changing "Hurricane" into "Astral Storm" during "Lunar Eclipse",
+  resulting in tooltips for some spells showing as different spells, and getting other invalid states
 
 2.1.5
 * Shaman - Removed cure magic attribute from "Cleanse Spirit"
@@ -155,7 +188,7 @@
 * Updated cure effects for all classes
 
 2.1.0 Beta
-* Initial support for MoP beta.  
+* Initial support for MoP beta.
 
 2.0.6
 * Added "Holy Word: Serenity" to Priest's default spell list.  Note- to configure this, you will either need to either select it in a Healium config panel drop-down or use the "Configure Button" menu. Drag and dropping it doesn't seem to work due to the spell's dynamic nature.
@@ -172,7 +205,7 @@
 2.0.3
 * Fixed new bug in 2.0.0: When using the Healium config panel to overwrite a macro or item, it would still consider the spell in that slot to be a macro or item
 
-2.0.2 
+2.0.2
 * Fixed new bug in 2.0.0: Toggle frames caused a LUA error.
 * Cooldowns for macros
 
@@ -181,21 +214,21 @@
 
 2.0.0
 * Support wow version 4.1
-* Added support for Macros and Items.  You must use Drag and Drop to configure them both, as neither macros nor items appear in the Healium menus.  
+* Added support for Macros and Items.  You must use Drag and Drop to configure them both, as neither macros nor items appear in the Healium menus.
    Macros must use [@mouseover] modifier to work correctly with Healium, otherwise they will use the default macro target logic (usually cast on you or your current target)
    Here is an example macro for instant Druid's Healing Touch that works with Healium:
-   
+
 	#showtooltip
 	/cast Nature's Swiftness
 	/cast [@mouseover] Healing Touch
-   
+
    Note that if you omit the [@mouseover] it will cast on your current target or yourself, instead of using the target assigned to the Healium button.
 
 * Removed ability to auto-import Button Assignments and Button Count settings from ancient versions of Healium (prior to .9.3.0)
 * Added /hlm show target and /hlm show focus slash commands
-   
 
-1.4.0 
+
+1.4.0
 * Added Healium Target and Focus unit frames
 * Added option to show raid icons (raid icon support already existed but there was no option to turn it off)
 * Fixed bug with raid icons being incorrect sometimes when the party/raid makeup changes
@@ -204,7 +237,7 @@
 * Added show Incoming Heals option
 * Toggle Frames will turn on Party and Pets frames if all frames are off and no frames were previously toggled off.  i.e. When it would otherwise do nothing at all.
 
-1.2.0 
+1.2.0
 * Removed all logic that causes buttons to grey out.
 * Removed all frame strata settings.  This caused some parts of the Healium UI to sometimes incorrectly appear in front of or behind other UI elements.
 * Power Word: Shield now bases its cooldown on the unit's Weakened Soul debuff.  -- Should make many priests happy!
@@ -217,7 +250,7 @@
 * Fix Healium buffs tooltip was generating a LUA error.  This error was caused in 1.1.5.
 
 1.1.5
-* Fix for showing the wrong name sometimes for some party / raid members after 4.0.3 patch.  
+* Fix for showing the wrong name sometimes for some party / raid members after 4.0.3 patch.
 
 1.1.4
 * Additional fix for names appearing as "Unknown" in random dungeon type groups, due to new unit frame bugs introduced by Blizzard in wow 4.0.3.
@@ -228,11 +261,11 @@
 1.1.2
 * Fixed issues caused when Enable Clique Support is on.  This caused heal buttons to not appear, among other things.
 
-1.1.1 
+1.1.1
 * Added back Natures Swiftness for Shamen
 * Added back Wild Growth for Druids
 
-1.1.0 
+1.1.0
 * Update to work with wow 4.0.1
 
 1.0.2
@@ -279,11 +312,11 @@
 .9.3.5
 * Fixed loading and LUA errors caused in .9.3.4
 
-.9.3.4 
-* Added Lock Frames checkbox to config panel.  
+.9.3.4
+* Added Lock Frames checkbox to config panel.
 * Added tool-tips to controls on config panel.
 
-.9.3.3 
+.9.3.3
 This version was not released to the public.
 * Switced to using Curse source control and automatic packaging, so the .zip names will be in a little different format.
 * .zip now includes a changelog.txt that contains this same exact text.
@@ -295,7 +328,7 @@ This version was not released to the public.
 
 .9.3.1
 * Fixed LUA errors caused in .9.3.0:
-Interface\FrameXML\UIDropDownMenu.lua:604 attempt to index local 'button' (a nil value) 
+Interface\FrameXML\UIDropDownMenu.lua:604 attempt to index local 'button' (a nil value)
 Interface\FrameXML\UIDropDownMenu.lua:859 attempt to index local 'filterText' (a nil value)
 
 .9.3.0
@@ -334,9 +367,9 @@ Here are the frames:
 * Pets – Shows all pets in your group or raid.  That’s right- now you can now heal pets with Healium.  This was impossible before.
 * Me – Shows you only.  You’re important and if you are in a large raid or battleground it’s not always easy to remember what group and position you are in.  With this frame open, you can always position your frame anywhere you want.  You can actually appear in multiple frames at the same time (Me, Party, and your raid group).
 * Group1-8 – Shows the corresponding raid group. The 25 man limit has been removed and you can now see groups 6-8.
-* The frames have a draggable caption and close button.  
+* The frames have a draggable caption and close button.
 * Player’s health bars are now true unit frames.
-* Left clicking on a player’s health bar will now target the player.  
+* Left clicking on a player’s health bar will now target the player.
 * If you have a spell primed then you can left click the health bar to cast it on them.
 *  Right clicking on a player’s health bar will allow you to drag the entire frame.
 
@@ -346,7 +379,7 @@ Left clicking on the Healium mini map icon will now open a menu. The fist menu “
 Buffs / HOTs
 * Your active buffs/HOTs on players will show up as small icons just to the left of their health bar.  The icons have cooldown animations so you can judge how long they have left.  It also shows how many times the spell is stacked.  Only the spells you have assigned to Healium which you have personally cast will show up.  This feature is incredibly useful for spells like Beacon of Light (Paladin), Lifebloom (Druid), Prayer of Mending (Priest), among many others.
 15 Buttons
-* The maximum number of buttons has been increased from 8 to 15.  
+* The maximum number of buttons has been increased from 8 to 15.
 New Available Spells
 These spells will now appear in the Config Panel button dropdowns if you have the spell.
 * Draenei– Gift of the Naaru
@@ -360,14 +393,14 @@ Added
 * Use Class Colors checkbox – If checked, the health bar color will be the color of the player’s class instead of green/yellow/red based on their current health.
 * Show Frames checkboxes: Party, Pets, Me, Group1-8 – Toggling these will show or hide the corresponding frame.
 * Show Buffs checkbox – Controls whether or not to show your buffs beside each player’s health bar.  Only your buffs which have also been assigned to Healium will be shown.
-Removed 
+Removed
 * Default Party Frames – This option was especially troubling to support after the unit frames coding changes.  If anyone misses this, say so as it is probably salvageable, but with a lot of work.
-* Raid Scale setting – This setting was there to support shrinking the UI when in “raid mode” to allow the single column to fit on the screen.  Now that we have multiple frames support I don’t see a need to have a separate setting; just use the Scale setting which now controls the scale for all frames.  
+* Raid Scale setting – This setting was there to support shrinking the UI when in “raid mode” to allow the single column to fit on the screen.  Now that we have multiple frames support I don’t see a need to have a separate setting; just use the Scale setting which now controls the scale for all frames.
 * No Raid checkbox – If you don’t want to see raid frames, either close them or just don’t open them.
 * Enabled checkbox – Before this update, this was your only option to close the main Healium frame.  Now you can close the individual frames instead.
 
 .9.0.5
-* Fixed spellbook blocking issue.  
+* Fixed spellbook blocking issue.
 
 .9.0.4
 * Added "Penance" to Priests spell list.
@@ -385,5 +418,5 @@ Removed
 * Increased max button count from 7 to 8
 * Added druid spells "Wild Growth", and "Innervate" to the available spells list for druids.
 
-.9.0 
+.9.0
 * Initial Release
