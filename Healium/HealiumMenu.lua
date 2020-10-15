@@ -39,22 +39,22 @@ local function CanConfigureButtons()
 		Healium_Warn("Can't configure buttons while in combat!")
 		return false
 	end
-	
+
 	return true
 end
 
 local function SetButtonCount(info, arg1)
 	if CanConfigureButtons() == false then return end
-	
+
 	Healium_SetButtonCount(arg1)
 end
 
 local function SetCurrentSpell(info, btnIndex, spellIndex)
 	if CanConfigureButtons() == false then return end
-	
+
 	local Profile = Healium_GetProfile()
 	Healium_SetProfileSpell(Profile, btnIndex, Healium_Spell.Name[spellIndex], Healium_Spell.ID[spellIndex], Healium_Spell.Icon[spellIndex])
-	
+
 	Healium_Update_ConfigPanel()
 	Healium_UpdateButtonIcons()
 	Healium_UpdateButtonAttributes()
@@ -65,19 +65,19 @@ local function RotateButtonsLeft(info, btnIndex)
 
 	local Profile = Healium_GetProfile()
 	if Profile.ButtonCount <= 1 then return end
-	
+
 	local leftName = Profile.SpellNames[1]
 	local leftIcon = Profile.SpellIcons[1]
 	local leftType = Profile.SpellTypes[1]
 	local leftID = Profile.IDs[1]
 
 	local startIndex = btnIndex or 1
-	
+
 	for i=startIndex, Profile.ButtonCount - 1 do
 		Profile.SpellNames[i] = Profile.SpellNames[i+1]
-		Profile.SpellIcons[i] = Profile.SpellIcons[i+1] 
+		Profile.SpellIcons[i] = Profile.SpellIcons[i+1]
 		Profile.SpellTypes[i] = Profile.SpellTypes[i+1]
-		Profile.IDs[i] = Profile.IDs[i+1] 
+		Profile.IDs[i] = Profile.IDs[i+1]
     end
 
 	if btnIndex == nil then
@@ -85,11 +85,11 @@ local function RotateButtonsLeft(info, btnIndex)
 		Profile.SpellIcons[Profile.ButtonCount] = leftIcon
 		Profile.SpellTypes[Profile.ButtonCount] = leftType
 		Profile.IDs[Profile.ButtonCount] = leftID
-		
-		-- in the case we supply a button index, callers will update		
-		Healium_Update_ConfigPanel()	
+
+		-- in the case we supply a button index, callers will update
+		Healium_Update_ConfigPanel()
 		Healium_UpdateButtonIcons()
-		Healium_UpdateButtonAttributes()	
+		Healium_UpdateButtonAttributes()
 	end
 end
 
@@ -97,20 +97,20 @@ local function RotateButtonsRight(info, btnIndex)
 	if CanConfigureButtons() == false then return end
 
 	local Profile = Healium_GetProfile()
-	if Profile.ButtonCount <= 1 then return end	
-	
+	if Profile.ButtonCount <= 1 then return end
+
 	local rightName = Profile.SpellNames[Profile.ButtonCount]
 	local rightIcon = Profile.SpellIcons[Profile.ButtonCount]
 	local rightType = Profile.SpellTypes[Profile.ButtonCount]
 	local rightID = Profile.IDs[Profile.ButtonCount]
-	
+
 	local stopIndex = btnIndex or 2
-	
+
 	for i=Profile.ButtonCount, stopIndex, -1 do
 		Profile.SpellNames[i] = Profile.SpellNames[i-1]
-		Profile.SpellIcons[i] = Profile.SpellIcons[i-1] 
+		Profile.SpellIcons[i] = Profile.SpellIcons[i-1]
 		Profile.SpellTypes[i] = Profile.SpellTypes[i-1]
-		Profile.IDs[i] = Profile.IDs[i-1] 
+		Profile.IDs[i] = Profile.IDs[i-1]
     end
 
 	if btnIndex == nil then
@@ -119,32 +119,32 @@ local function RotateButtonsRight(info, btnIndex)
 		Profile.SpellTypes[1] = rightType
 		Profile.IDs[1] = rightID
 
-		-- in the case we supply a button index, callers will update		
-		Healium_Update_ConfigPanel()	
+		-- in the case we supply a button index, callers will update
+		Healium_Update_ConfigPanel()
 		Healium_UpdateButtonIcons()
 		Healium_UpdateButtonAttributes()
-	end		
+	end
 end
 
 local function InsertButton(info, btnIndex)
 	if CanConfigureButtons() == false then return end
 
 	local Profile = Healium_GetProfile()
-	if Profile.ButtonCount >= Healium_MaxButtons then 
+	if Profile.ButtonCount >= Healium_MaxButtons then
 		Healium_Warn("Can't insert more buttons! Max button count already reached!")
 		return
 	end
-	
+
 	Profile.ButtonCount = Profile.ButtonCount + 1
-	
+
 	RotateButtonsRight(nil, btnIndex + 1);
-	
+
 	Profile.SpellNames[btnIndex] = nil
 	Profile.SpellIcons[btnIndex] = nil
 	Profile.SpellTypes[btnIndex] = nil
 	Profile.IDs[btnIndex] = nil
-	
-	Healium_Update_ConfigPanel()	
+
+	Healium_Update_ConfigPanel()
 	Healium_UpdateButtonIcons()
 	Healium_UpdateButtonAttributes()
 end
@@ -156,15 +156,15 @@ local function DeleteButton(info, btnIndex)
 	RotateButtonsLeft(nil, btnIndex)
 	Profile.ButtonCount = Profile.ButtonCount - 1
 
-	Healium_Update_ConfigPanel()	
+	Healium_Update_ConfigPanel()
 	Healium_UpdateButtonIcons()
 	Healium_UpdateButtonAttributes()
 end
 
 local function HealiumMenu_InitializeDropDown(frame,level)
 	level = level or 1
-	
-	local MenuTable = 
+
+	local MenuTable =
 	{
 		[1] = -- Define level one elements here
 		{
@@ -206,12 +206,12 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 				value  = nil,
 				notCheckable = 1,
 				text = "Close Menu",
-				func = frame.HideMenu			
+				func = frame.HideMenu
 			}
 		},
 		[2] = -- Submenu items, keyed by value
 		{
-			["Frames"] = 
+			["Frames"] =
 			{
 				{
 					text = "Toggle Frames",
@@ -230,62 +230,62 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 				},
 				{	-- Pet Frame
 					text = "Show Pets",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowPetsFrame,
 				},
 				{	-- Friends Frame
 					text = "Show Friends",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowFriendsFrame,
 				},
--- TODO DAMAGERS/HEALERS frame	
+-- TODO DAMAGERS/HEALERS frame
 --[[
 				{	-- Damagers Frame
 					text = "Show Damagers",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowDamagersFrame,
 				},
 				{	-- Healers Frame
 					text = "Show Healers",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowHealersFrame,
 				},
---]]				
+--]]
 				{	-- Tanks Frame
 					text = "Show Tanks",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowTanksFrame,
 				},
 				{	-- Target Frame
 					text = "Show Target",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowTargetFrame,
 				},
 				{	-- Focus Frame
 					text = "Show Focus",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = ShowFocusFrame,
 				},
 				{
 					text = "Hide All Raid Groups",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = Healium_HideAllRaidFrames,
 				},
 				{
 					text = "Show Raid Groups 1 and 2 (10 man)",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = Healium_Show10ManRaidFrames,
 				},
 				{
 					text = "Show Raid Groups 1-5 (25 man)",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = Healium_Show25ManRaidFrames,
-				}, 
+				},
 				{
 					text = "Show Raid Groups 1-8 (40 man)",
-					notCheckable = 1,					
+					notCheckable = 1,
 					func = Healium_Show40ManRaidFrames,
-				}, 
+				},
 			},
 		},
 		[3] = {},
@@ -293,11 +293,11 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 
 	local sbc = { }
 	local btnConfig = {}
-	local Profile = Healium_GetProfile()	
-	
+	local Profile = Healium_GetProfile()
+
 
 	for i=0, Healium_MaxButtons, 1 do
-	
+
 		-- configure SetButtonCount
 		local menuItem = { }
 		menuItem.text = i
@@ -307,7 +307,7 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 --			menuItem.disabled = nil
 		table.insert(sbc, menuItem)
 
-		-- configure Configure Buttons		
+		-- configure Configure Buttons
 		if i > 0 and i <= Profile.ButtonCount then
 			local btnMenuItem = { }
 			btnMenuItem.text = "Button " .. i
@@ -317,26 +317,26 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 			table.insert(btnConfig, btnMenuItem)
 		end
 	end
-	
+
 	-- Add Rotate Left, Rotate Right, Insert Button, Delete Button to Configure Buttons
-	local cmds = 
+	local cmds =
 	{
-		{ 
+		{
 			text = "Rotate Buttons Left",
 			notCheckable = 1,
 			func = RotateButtonsLeft
 		},
-		{ 
+		{
 			text = "Rotate Buttons Right",
 			notCheckable = 1,
 			func = RotateButtonsRight
 		},
 	}
-		
+
 	for k, v in ipairs (cmds) do
 		table.insert(btnConfig, v)
-	end		
-	
+	end
+
 	MenuTable[2].SetButtonCount = sbc
 	MenuTable[2].ConfigureButtons = btnConfig
 
@@ -349,9 +349,9 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 			isTitle = 1,
 		}
 	}
-	
+
 	local currentSpell = Profile.SpellNames[index]
-	
+
 	for k, v in ipairs (Healium_Spell.Name) do
 		local spellmenuItem = { }
 		spellmenuItem.text = Healium_Spell.Name[k]
@@ -360,14 +360,14 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 		spellmenuItem.checked = currentSpell == Healium_Spell.Name[k]
 		spellmenuItem.arg1 = index
 		spellmenuItem.arg2 = k
-		
+
 		if (spellmenuItem.icon) then
 			table.insert(spells, spellmenuItem)
 		end
 	end
 
 	-- Add No Spell, Insert Button, and Delete Button
-	cmds = 
+	cmds =
 	{
 		{
 			text = "No Spell",
@@ -386,19 +386,19 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 			notCheckable = 1,
 			func = DeleteButton,
 			arg1 = index
-		}	
+		}
 	}
 	for k, v in ipairs (cmds) do
 		table.insert(spells, v)
-	end		
-	
-	
+	end
+
+
 	MenuTable[3][index] = spells
 
-	
+
 	local info = MenuTable[level]
 	local menuval = LIB_UIDROPDOWNMENU_MENU_VALUE
-	
+
 	if (level > 1 and menuval) then
 		if info[menuval] then
 			info = info[menuval]
@@ -412,7 +412,7 @@ local function HealiumMenu_InitializeDropDown(frame,level)
 end
 
 function Healium_InitMenu()
-	HealiumMenu = CreateFrame("Frame", "HealiumOptionsMenu", Healium_MMButton, "Lib_UIDropDownMenuTemplate") 
+	HealiumMenu = CreateFrame("Frame", "HealiumOptionsMenu", Healium_MMButton, "Lib_UIDropDownMenuTemplate")
 	HealiumMenu:SetPoint("TOP", Healium_MMButton, "BOTTOM")
 	Lib_UIDropDownMenu_Initialize(HealiumMenu, HealiumMenu_InitializeDropDown, "MENU");
 end

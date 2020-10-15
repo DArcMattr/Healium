@@ -6,7 +6,7 @@
 
 Healium_Debug = false
 local AddonVersion = "|cFFFFFF00 2.5.9|r"
-	
+
 HealiumDropDown = {} -- the dropdown menus on the config panel
 
 -- Constants
@@ -23,7 +23,7 @@ local DefaultButtonCount = 5
 
 -- locale safe versions of spell names
 local ActivatePrimarySpecSpellName = GetSpellInfo(63645)
-local ActivateSecondarySpecSpellName = GetSpellInfo(63644) 
+local ActivateSecondarySpecSpellName = GetSpellInfo(63644)
 local PWSName = GetSpellInfo(17) -- Power Word: Shield
 local WeakendSoulName = GetSpellInfo(6788) -- Weakened Soul
 
@@ -33,8 +33,8 @@ local stable
 -- Healium holds per character settings
 Healium = {
   Scale = 1.0,									-- Scale of frames
-  DoRangeChecks = true,							-- Whether or not to do range checks on buttons 
-  RangeCheckPeriod = .5,						-- Time period between range checks  
+  DoRangeChecks = true,							-- Whether or not to do range checks on buttons
+  RangeCheckPeriod = .5,						-- Time period between range checks
   EnableCooldowns = true,						-- Whether or not to do cooldown animations on buttons
   ShowToolTips = true,							-- Whether or not to display a tooltip for the spell when hovering over buttons
   ShowPercentage = true,						-- Whether or not to display the health percentage
@@ -83,11 +83,11 @@ Healium.Profiles is a table of tables with this signature
 	SpellTypes -- One of the Healium_Type_ (new in Healium 2.0)
 	IDs -- item ID when SpelType is Healium_Type_Item
 }
-TODO refactor Healium.Profiles to instead contain a single table named Spells which contain a variable for each of the above tables 
+TODO refactor Healium.Profiles to instead contain a single table named Spells which contain a variable for each of the above tables
 ]]
 
 -- Global Constants
-Healium_MaxButtons = 15		-- Max Possible buttons 
+Healium_MaxButtons = 15		-- Max Possible buttons
 Healium_AddonName = "Healium"
 Healium_AddonColor = "|cFF55AAFF"
 Healium_AddonColoredName = Healium_AddonColor .. Healium_AddonName .. "|r"
@@ -104,12 +104,12 @@ Healium_ShownFrames = { } -- table of all shown "unit" frames.
 Healium_FixNameplates = { } -- nameplates that need various updates when out of combat
 
 --[[
-List of spells, icons for the spells, and IDs. 
+List of spells, icons for the spells, and IDs.
 These only contain specifically selected spells in HealiumSpells.lua
 The Name gets filled in in Healium_InitSpells(). Healium_UpdateSpells() will fill in the ID and Icon if
 the player actually has the spell.
 --]]
-Healium_Spell = {		
+Healium_Spell = {
   Name = {},
   Icon = {},
   ID = {}
@@ -118,33 +118,33 @@ Healium_Spell = {
 local HealiumFrame = nil
 
 function Healium_Print(msg)
-	DEFAULT_CHAT_FRAME:AddMessage(Healium_AddonColor .. Healium_AddonName .. "|r " .. tostring(msg))		
+	DEFAULT_CHAT_FRAME:AddMessage(Healium_AddonColor .. Healium_AddonName .. "|r " .. tostring(msg))
 end
 
 function Healium_DebugPrint(...)
 	if (Healium_Debug) then
 		local result = "Debug: "
-		
-		for i = 1, select("#", ...) do 
+
+		for i = 1, select("#", ...) do
 			result = result .. " " .. tostring(select(i, ...))
 		end
-	
-		Healium_Print(result)		
+
+		Healium_Print(result)
 	end
 end
 
 function Healium_Warn(msg)
-	DEFAULT_CHAT_FRAME:AddMessage("|CFFFF0000Warning|r: " .. tostring(msg))		
+	DEFAULT_CHAT_FRAME:AddMessage("|CFFFF0000Warning|r: " .. tostring(msg))
 end
 
 function Healium_GetProfile()
 	local currentSpec = GetSpecialization()
-	
+
 	if not currentSpec then
 		currentSpec = 1
 	end
-	
-	return Healium.Profiles[currentSpec] 
+
+	return Healium.Profiles[currentSpec]
 end
 
 function Healium_SetProfileSpell(profile, index, spellName, spellID, spellIcon)
@@ -171,21 +171,21 @@ end
 function Healium_OnLoad(frame)
 	HealiumFrame = frame
  	Healium_Print(AddonVersion.." |cFF00FF00Loaded |rClick The MiniMap button for options.")
-	Healium_Print("Type " .. Healium_Slash .. " for a list of slash commands." )	
- 
+	Healium_Print("Type " .. Healium_Slash .. " for a list of slash commands." )
+
 	HealiumFrame:RegisterEvent("ADDON_LOADED")
 	HealiumFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	HealiumFrame:RegisterEvent("SPELLS_CHANGED")
 	HealiumFrame:RegisterEvent("UNIT_HEALTH")
 	HealiumFrame:RegisterEvent("UNIT_MAXHEALTH")
 --	HealiumFrame:RegisterEvent("VARIABLES_LOADED")
-	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_SENT")	
+	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_SENT")
 	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
 	HealiumFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	HealiumFrame:RegisterEvent("PLAYER_TALENT_UPDATE")
 	HealiumFrame:RegisterEvent("SPELL_UPDATE_COOLDOWN")
 	HealiumFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
---	HealiumFrame:RegisterEvent("PLAYER_ALIVE")	
+--	HealiumFrame:RegisterEvent("PLAYER_ALIVE")
 	HealiumFrame:RegisterEvent("UNIT_NAME_UPDATE")
 	HealiumFrame:RegisterEvent("UNIT_AURA")
 end
@@ -206,14 +206,14 @@ end
 
 -- Sets the health bar color based on the unit's health ONLY
 local function UpdateHealthBar(HPPercent, frame)
-	if (HPPercent > LowHP) then 
-		frame.HealthBar:SetStatusBarColor(0,1,0,1) 
+	if (HPPercent > LowHP) then
+		frame.HealthBar:SetStatusBarColor(0,1,0,1)
 	end
-	if (HPPercent < LowHP) then 
-		frame.HealthBar:SetStatusBarColor(1,0.9,0,1) 
+	if (HPPercent < LowHP) then
+		frame.HealthBar:SetStatusBarColor(1,0.9,0,1)
 	end
 	if (HPPercent < VeryLowHP) then
-		frame.HealthBar:SetStatusBarColor(1,0,0,1) 
+		frame.HealthBar:SetStatusBarColor(1,0,0,1)
 	end
 end
 
@@ -224,7 +224,7 @@ function Healium_UpdateClassColors()
 			if Healium.UseClassColors then
 				local class = select(2, UnitClass(k.TargetUnit)) or "WARRIOR"
 				local color = RAID_CLASS_COLORS[class]
-				k.HealthBar:SetStatusBarColor(color.r, color.g, color.b)				
+				k.HealthBar:SetStatusBarColor(color.r, color.g, color.b)
 			else
 				local Health = UnitHealth(k.TargetUnit)
 				local MaxHealth = UnitHealthMax(k.TargetUnit)
@@ -240,11 +240,11 @@ function Healium_UpdateUnitName(unitName, NamePlate)
 	if not UnitExists(unitName) then return end
 
 	local playerName = UnitName(unitName)
-	
+
 	if playerName ~= nil and Healium.UppercaseNames then
 		playerName = strupper(playerName)
 	end
-	
+
 	NamePlate.HealthBar.name:SetText(playerName)
 end
 
@@ -260,53 +260,53 @@ function Healium_UpdateUnitHealth(unitName, NamePlate)
 	if not unitName then return end
 	if not NamePlate then return end
 	if not UnitExists(unitName) then return end
-		
+
 	local Health = UnitHealth(unitName)
 	local MaxHealth = UnitHealthMax(unitName)
-	
-	local isDead 
-		
+
+	local isDead
+
 	if UnitIsDeadOrGhost(unitName) then
 		Health = 0
 		isDead = 1
 	end
-	
-	local HPPercent 
-	
-	if MaxHealth == 0 then 
+
+	local HPPercent
+
+	if MaxHealth == 0 then
 		Health = 0
 		HPPercent = 0
 	else
 		HPPercent = Health / MaxHealth
-	end	 
-	
-	if HPPercent > 1 then 
+	end
+
+	if HPPercent > 1 then
 		HPPercent = 1
 	end
-	
+
 	if HPPercent < 0 then
 		HPPercent = 0
 	end
-	
+
 	if isDead then
-		NamePlate.HealthBar.HPText:SetText( "dead" )	
+		NamePlate.HealthBar.HPText:SetText( "dead" )
 	else
 		NamePlate.HealthBar.HPText:SetText( format("%.1i%%", HPPercent*100))
 	end
-	
+
 	NamePlate.HealthBar:SetMinMaxValues(0,MaxHealth)
 	NamePlate.HealthBar:SetValue(Health)
-	
+
 	if Healium.EnableDebufs and Healium.EnableDebufHealthbarColoring and NamePlate.hasDebuf then
-		NamePlate.HealthBar:SetStatusBarColor(NamePlate.debuffColor.r, NamePlate.debuffColor.g, NamePlate.debuffColor.b)					
+		NamePlate.HealthBar:SetStatusBarColor(NamePlate.debuffColor.r, NamePlate.debuffColor.g, NamePlate.debuffColor.b)
 	elseif Healium.UseClassColors then
 		local class = select(2, UnitClass(unitName)) or "WARRIOR"
 		local color = RAID_CLASS_COLORS[class]
-		NamePlate.HealthBar:SetStatusBarColor(color.r, color.g, color.b)					
+		NamePlate.HealthBar:SetStatusBarColor(color.r, color.g, color.b)
 	else
 		UpdateHealthBar(HPPercent, NamePlate)
 	end
-	
+
 	-- incoming heals
 	if Healium.ShowIncomingHeals then
 		local IncomingHealth = UnitGetIncomingHeals(unitName)
@@ -325,9 +325,9 @@ end
 function Healium_UpdateUnitMana(unitName, NamePlate)
 	if not NamePlate then return end
 	if not UnitExists(unitName) then return end
-	
+
 	if NamePlate.showMana == nil then return end
-	
+
 	local Mana = UnitPower(unitName, SPELL_POWER_MANA)
 	local MaxMana = UnitPowerMax(unitName, SPELL_POWER_MANA)
 
@@ -342,10 +342,10 @@ end
 function Healium_UpdateShowMana()
 	if Healium.ShowMana then
 		HealiumFrame:RegisterEvent("UNIT_POWER_UPDATE")
-		HealiumFrame:RegisterEvent("UNIT_DISPLAYPOWER")		
+		HealiumFrame:RegisterEvent("UNIT_DISPLAYPOWER")
 	else
-		HealiumFrame:UnregisterEvent("UNIT_POWER_UPDATE")	
-		HealiumFrame:UnregisterEvent("UNIT_DISPLAYPOWER")				
+		HealiumFrame:UnregisterEvent("UNIT_POWER_UPDATE")
+		HealiumFrame:UnregisterEvent("UNIT_DISPLAYPOWER")
 	end
 
 	for _, k in ipairs(Healium_Frames) do
@@ -353,7 +353,7 @@ function Healium_UpdateShowMana()
 			HealiumUnitFames_CheckPowerType(k.TargetUnit, k)
 			Healium_UpdateUnitMana(k.TargetUnit, k)
 		end
-		
+
 		if InCombatLockdown() then
 			k.fixShowMana = true
 		else
@@ -371,23 +371,23 @@ function Healium_UpdateManaBarVisibility(frame)
 		frame.PredictBar:SetPoint("TOPLEFT", 7, -2)
 	else
 		frame.ManaBar:Hide()
-		frame.HealthBar:SetWidth(116)			
+		frame.HealthBar:SetWidth(116)
 		frame.HealthBar:SetPoint("TOPLEFT", 2, -2)
-		frame.PredictBar:SetWidth(116)			
-		frame.PredictBar:SetPoint("TOPLEFT", 2, -2)						
-		
-	end		
-	
+		frame.PredictBar:SetWidth(116)
+		frame.PredictBar:SetPoint("TOPLEFT", 2, -2)
+
+	end
+
 	Healium_UpdateUnitHealth(frame.TargetUnit, frame)
 end
 
 function Healium_UpdateShowBuffs()
---	if Healium.ShowBuffs then 
+--	if Healium.ShowBuffs then
 --		HealiumFrame:RegisterEvent("UNIT_AURA")
 --	else
 --		HealiumFrame:UnregisterEvent("UNIT_AURA")
 --	end
-	
+
 	for _, k in ipairs(Healium_ShownFrames) do
 		if (k.TargetUnit) then
 			local buffIndex = Healium_getBuffIndex(k.TargetUnit, k)
@@ -395,21 +395,21 @@ function Healium_UpdateShowBuffs()
 				Healium_UpdateUnitBuffs(k.TargetUnit, buffIndex)
 			end
 		end
-	end	
+	end
 end
 
 function Healium_UpdateUnitThreat(unitName, NamePlate)
 	if not NamePlate then return end
 	if not UnitExists(unitName) then return end
-	
+
 	if Healium.ShowThreat == nil then
-		NamePlate.AggroBar:SetAlpha(0)	
+		NamePlate.AggroBar:SetAlpha(0)
 		return
 	end
-	
+
 	local status = UnitThreatSituation(unitName)
 
-	if status and status > 1 then 
+	if status and status > 1 then
 		local r, g, b = GetThreatStatusColor(status)
 		NamePlate.AggroBar:SetBackdropBorderColor(r,g,b,1)
 		NamePlate.AggroBar:SetAlpha(1)
@@ -427,10 +427,10 @@ function Healium_UpdateShowThreat()
 
 	for _, k in ipairs(Healium_Frames) do
 		if (k.TargetUnit) then
-			if Healium.ShowThreat then	
+			if Healium.ShowThreat then
 				Healium_UpdateUnitThreat(k.TargetUnit, k)
 			else
-				k.AggroBar:SetAlpha(0)				
+				k.AggroBar:SetAlpha(0)
 			end
 		end
 	end
@@ -439,18 +439,18 @@ end
 function Healium_UpdateUnitRole(unitName, NamePlate)
 	if not NamePlate then return end
 	if not UnitExists(unitName) then return end
-	
+
 	local icon = NamePlate.HealthBar.RoleIcon
-	
+
 	if not Healium.ShowRole then
 		icon:Hide()
 		NamePlate.HasRole = nil
 		Healium_ShowHidePercentage(NamePlate)
 		return
 	end
-	
-	local role = UnitGroupRolesAssigned(unitName);	
-	
+
+	local role = UnitGroupRolesAssigned(unitName);
+
 	if ( role == "TANK" or role == "HEALER" or role == "DAMAGER") then
 		NamePlate.HasRole = true
 		icon:SetTexCoord(GetTexCoordsForRoleSmallCircle(role))
@@ -459,8 +459,8 @@ function Healium_UpdateUnitRole(unitName, NamePlate)
 		NamePlate.HasRole = nil
 		icon:Hide()
 	end
-	
-	Healium_ShowHidePercentage(NamePlate)	
+
+	Healium_ShowHidePercentage(NamePlate)
 end
 
 local function Healium_UpdateRoles()
@@ -477,7 +477,7 @@ function Healium_UpdateShowRole()
 	else
 		HealiumFrame:UnregisterEvent("GROUP_ROSTER_UPDATE")
 	end
-	
+
 	Healium_UpdateRoles()
 end
 
@@ -487,20 +487,20 @@ function Healium_UpdateShowIncomingHeals()
 	else
 		HealiumFrame:UnregisterEvent("UNIT_HEAL_PREDICTION")
 	end
-	
+
 	for _, k in ipairs(Healium_Frames) do
 		if Healium.ShowIncomingHeals then
 			k.PredictBar:Show()
 		else
 			k.PredictBar:Hide()
 		end
-	end	
+	end
 end
 
 local function Healium_UpdateRaidIcons()
 	for _, k in ipairs(Healium_Frames) do
 		Healium_UpdateRaidTargetIcon(k)
-	end	
+	end
 end
 
 function Healium_UpdateShowRaidIcons()
@@ -509,27 +509,27 @@ function Healium_UpdateShowRaidIcons()
 	else
 		HealiumFrame:UnregisterEvent("RAID_TARGET_UPDATE")
 	end
-	
+
 	Healium_UpdateRaidIcons()
 end
 
 function Healium_UpdateShowTargetFrame()
-	if Healium.ShowTargetFrame then 
-		Healium_DebugPrint("registering PLAYER_TARGET_CHANGED")	
+	if Healium.ShowTargetFrame then
+		Healium_DebugPrint("registering PLAYER_TARGET_CHANGED")
 		HealiumFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 	else
-		Healium_DebugPrint("UNregistering PLAYER_TARGET_CHANGED")		
-		HealiumFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")	
+		Healium_DebugPrint("UNregistering PLAYER_TARGET_CHANGED")
+		HealiumFrame:UnregisterEvent("PLAYER_TARGET_CHANGED")
 	end
 end
 
 function Healium_UpdateShowFocusFrame()
-	if Healium.ShowFocusFrame then 
+	if Healium.ShowFocusFrame then
 		Healium_DebugPrint("registering PLAYER_FOCUS_CHANGED")
 		HealiumFrame:RegisterEvent("PLAYER_FOCUS_CHANGED")
 	else
-		Healium_DebugPrint("UNregistering PLAYER_FOCUS_CHANGED")	
-		HealiumFrame:UnregisterEvent("PLAYER_FOCUS_CHANGED")	
+		Healium_DebugPrint("UNregistering PLAYER_FOCUS_CHANGED")
+		HealiumFrame:UnregisterEvent("PLAYER_FOCUS_CHANGED")
 	end
 end
 
@@ -544,62 +544,62 @@ local function GetSpellID(spell)
 
 	--new check in MoP.
 	--This is required because spells for other specs appear in the spell book and are disabled, and we don't want disabled spells appearing by default.
-	--GetSpellInfo() will return nil for those disabled spells. 
+	--GetSpellInfo() will return nil for those disabled spells.
 	--Warning passing an index to GetSpellInfo() will still return a name for disabled spells, but passing the spell name causes it to return nil
 	local name = GetSpellInfo(spell)
-	
+
 	if not name then
 		return nil
 	end
-	
+
 	local count = GetSpellCount()
-	
+
 	for i = 1, count do
         local spellName = GetSpellBookItemName(i, BOOKTYPE_SPELL)
         if not spellName then
             break
         end
         if (spellName == spell) then
-			local slotType = GetSpellBookItemInfo(i, BOOKTYPE_SPELL)		
-			if (slotType == "FUTURESPELL") then 
+			local slotType = GetSpellBookItemInfo(i, BOOKTYPE_SPELL)
+			if (slotType == "FUTURESPELL") then
 				break
 			end
             return i
         end
-		
+
         if (i > 300) then
             break
         end
     end
-	
+
     return nil
 end
 
 -- Loops through Healium_Spell.Name[] and updates it's corresponding .ID[] and .Icon[]
--- Warning UpdateSpells() is a global function from Blizzard. 
+-- Warning UpdateSpells() is a global function from Blizzard.
 local function Healium_UpdateSpells()
 	for k, v in ipairs (Healium_Spell.Name) do
 		Healium_Spell.ID[k] = GetSpellID(Healium_Spell.Name[k])
 		if (Healium_Spell.ID[k]) then
 			Healium_Spell.Icon[k] = GetSpellTexture(Healium_Spell.ID[k], BOOKTYPE_SPELL)
-		else 
+		else
 			Healium_Spell.Icon[k] = nil
 		end
-	end 
-	
+	end
+
 	Healium_UpdateButtonAttributes()
 end
 
 -- does special checks for specific buffs/debuffs
 function Healium_UpdateSpecialBuffs(unit)
 
-	if HealiumClass == "PRIEST" then 
+	if HealiumClass == "PRIEST" then
 		local Profile = Healium_GetProfile()
-		
-		--[[for i=1, Profile.ButtonCount, 1 do				
-		
-			-- special check for Power Word: Shield		
-			if Profile.SpellNames[i] == PWSName then 
+
+		--[[for i=1, Profile.ButtonCount, 1 do
+
+			-- special check for Power Word: Shield
+			if Profile.SpellNames[i] == PWSName then
 				local units = Healium_Units[unit]
 
 				if units then
@@ -608,10 +608,10 @@ function Healium_UpdateSpecialBuffs(unit)
 						local name, _, _, _, weakendSoulduration, expirationTime, _, _, _, spellID = UnitDebuff(unit, buffIndex)
 					end
 
-					if name then 
-						local startTime = expirationTime - weakendSoulduration										
-				
-						for _, frame in pairs(units) do 
+					if name then
+						local startTime = expirationTime - weakendSoulduration
+
+						for _, frame in pairs(units) do
 							local button = frame.buttons[i]
 							if button and button:IsShown() then
 								button.cooldown:SetCooldown(startTime, weakendSoulduration)
@@ -630,11 +630,11 @@ end
 local function GetCooldown(Profile, column)
 	local start, duration, enable
 
-	if Profile.IDs[column] ~= nil then 
-		
-		if Profile.SpellTypes[column] == Healium_Type_Macro then 
+	if Profile.IDs[column] ~= nil then
+
+		if Profile.SpellTypes[column] == Healium_Type_Macro then
 			local name = GetMacroSpell(Profile.SpellNames[column])
-			if name then 
+			if name then
 				start, duration, enable = GetSpellCooldown(name)
 			else
 				enable = false
@@ -644,7 +644,7 @@ local function GetCooldown(Profile, column)
 			GetItemInfo(Profile.SpellNames[column])
 			start, duration, enable = GetItemCooldown(Profile.IDs[column])
 		else
-			-- Handle "spell" cooldowns	
+			-- Handle "spell" cooldowns
 			local name = Profile.SpellNames[column]
 			if name then
 				start, duration, enable = GetSpellCooldown(Profile.SpellNames[column])
@@ -653,41 +653,41 @@ local function GetCooldown(Profile, column)
 			end
 		end
 	end
-	
+
 	return start, duration, enable
 end
 
 function Healium_UpdateButtonCooldown(frame, start, duration, enable)
-	if frame then 
-		if frame:IsShown() and stable then 
-		
+	if frame then
+		if frame:IsShown() and stable then
+
 			-- temp fix for lua errors caused in patch 5.1.. Somehow these values are sometimes invalid for a few seconds after loading, and these explicit checks seem to fix it
 			if start == nil then
 				start = GetTime()
 			end
-			
+
 			if duration == nil then
 				duration = 0
 			end
 
-			if enable == nil then 
+			if enable == nil then
 				enable = 0
-			end		
-			
-			CooldownFrame_Set(frame.cooldown, start, duration, enable) 
+			end
+
+			CooldownFrame_Set(frame.cooldown, start, duration, enable)
 		end
 	end
 end
 
 function Healium_UpdateButtonCooldownsByColumn(column)
 	local Profile = Healium_GetProfile()
-	
+
 	local start, duration, enable = GetCooldown(Profile, column)
-	
+
 	for unit, j in pairs(Healium_Units) do
 		for x,y in pairs(j) do
 			local button = y.buttons[column]
-			if button then 
+			if button then
 				Healium_UpdateButtonCooldown(button, start, duration, enable)
 			end
 		end
@@ -698,7 +698,7 @@ end
 
 local function Healium_UpdateButtonCooldowns()
 	local count = Healium_GetProfile().ButtonCount
-	
+
 	for i=1, count, 1 do
 		Healium_UpdateButtonCooldownsByColumn(i)
 	end
@@ -706,7 +706,7 @@ end
 
 function Healium_UpdateButtonIcon(button, texture)
 	button.icon.disabled = nil
-	
+
 	if InCombatLockdown() then
 		return
 	end
@@ -715,7 +715,7 @@ function Healium_UpdateButtonIcon(button, texture)
 		button.icon:SetTexture(texture)
 	else
 		button.icon:SetTexture("Interface/Icons/INV_Misc_QuestionMark")
-	end		
+	end
 end
 
 function Healium_UpdateButtonIcons()
@@ -726,10 +726,10 @@ function Healium_UpdateButtonIcons()
 	local Profile = Healium_GetProfile()
 	for i=1, Healium_MaxButtons, 1 do
 		local texture = Profile.SpellIcons[i]
-		
+
 		for _, k in ipairs(Healium_Frames) do
 			local button = k.buttons[i]
-			if button then 
+			if button then
 				Healium_UpdateButtonIcon(button, texture)
 			end
 		end
@@ -739,19 +739,19 @@ end
 function Healium_SetButtonAttributes(button)
 	-- update button.id even while in combat.
 	-- This is needed because we use this for a number of things, including tooltips, and the IDs can now change while in combat due to spells dynamically changing.
-	-- Spells (possibly not even configured in Healium) can dynamically change/rename, causing all other spellid to shift/change, so in those cases, we need to 
+	-- Spells (possibly not even configured in Healium) can dynamically change/rename, causing all other spellid to shift/change, so in those cases, we need to
 	-- update the button.id to keep on the same spell.
 	-- This actually fixed a hard to find Druid bug in 5.0 with Hurricane changing to Astral Storm and causing some spellIDs to shift around.
-	local Profile = Healium_GetProfile()	
+	local Profile = Healium_GetProfile()
 	local index = button.index
 	button.id = Profile.IDs[index]
-	
+
 	if InCombatLockdown() then
 		return
 	end
-	
+
 	local stype, spell, macro, item
-	
+
 	if Profile.SpellTypes[index] == Healium_Type_Macro then
 		stype = "macro"
 		macro = Profile.SpellNames[index]
@@ -760,10 +760,10 @@ function Healium_SetButtonAttributes(button)
 		item = Profile.SpellNames[index]
 	else
 		stype = "spell"
-		spell = Profile.SpellNames[index]	
+		spell = Profile.SpellNames[index]
 	end
-	
-	
+
+
 	button:SetAttribute("type", stype)
 	button:SetAttribute("spell", spell)
 	button:SetAttribute("macro", macro)
@@ -772,25 +772,25 @@ end
 
 function Healium_UpdateButtonAttributes()
 	local Profile = Healium_GetProfile()
-	
+
 	for i=1, Healium_MaxButtons, 1 do
-	
+
 		-- update spell IDs
-		if (Profile.SpellTypes[i] == nil) or (Profile.SpellTypes[i] == Healium_Type_Spell) then 
+		if (Profile.SpellTypes[i] == nil) or (Profile.SpellTypes[i] == Healium_Type_Spell) then
 			local name = Profile.SpellNames[i]
-			if name then 
+			if name then
 				Profile.IDs[i] = GetSpellID(name)
 			end
 		end
-		
+
 		for _,k in ipairs(Healium_Frames) do
 			local button = k.buttons[i]
-			if button then 
+			if button then
 				Healium_SetButtonAttributes(button)
 			end
 		end
 	end
-	
+
 	Healium_UpdateCures()
 end
 
@@ -800,19 +800,19 @@ local function UpdateButtonVisibility(frame)
 	end
 
 	-- Hide all buttons
-	for i=1, Healium_MaxButtons, 1 do 
+	for i=1, Healium_MaxButtons, 1 do
 		local button = frame.buttons[i]
-		if button then 
+		if button then
 			button:Hide()
 		end
 	end
 
-	-- Show buttons.  The buttons will not actually show up unless their nameplate are visible so it's fine to show them like this.	
+	-- Show buttons.  The buttons will not actually show up unless their nameplate are visible so it's fine to show them like this.
 	local count = Healium_GetProfile().ButtonCount
-	
-	for i=1, count, 1 do 
-		local button = frame.buttons[i]	
-		if button then 
+
+	for i=1, count, 1 do
+		local button = frame.buttons[i]
+		if button then
 			button:Show()
 		end
 	end
@@ -822,7 +822,7 @@ function Healium_UpdateButtonVisibility()
 	if InCombatLockdown() then
 		return
 	end
-	
+
 	for _,k in ipairs(Healium_Frames) do
 		UpdateButtonVisibility(k)
 	end
@@ -836,21 +836,21 @@ end
 
 function Healium_RangeCheckButton(button)
 	local Profile = Healium_GetProfile()
-	
-	if (Profile.SpellTypes[button.index] == nil) or (Profile.SpellTypes[button.index] == Healium_Type_Spell) then 
+
+	if (Profile.SpellTypes[button.index] == nil) or (Profile.SpellTypes[button.index] == Healium_Type_Spell) then
 		if (button.id) then
 			local isUsable, noMana = IsUsableSpell(button.id, BOOKTYPE_SPELL)
 
 			if noMana then
 				button.icon:SetVertexColor(0.5, 0.5, 1.0)
 			else
-				if not button.icon.disabled then 
+				if not button.icon.disabled then
 					button.icon:SetVertexColor(1.0, 1.0, 1.0)
 				end
 			end
-			
+
 			local inRange = IsSpellInRange(button.id, BOOKTYPE_SPELL, button:GetParent().TargetUnit)
-				
+
 			if SpellHasRange(button.id, BOOKTYPE_SPELL)  then
 				if (inRange == 0) or (inRange == nil) then
 					button.icon:SetVertexColor(1.0, 0.3, 0.3)
@@ -858,7 +858,7 @@ function Healium_RangeCheckButton(button)
 			end
 		end
 	end
-	
+
 	-- todo range check macros, and items
 end
 
@@ -899,11 +899,11 @@ local function InitVariables()
 	if (not Healium.RaidScale) then
 		Healium.RaidScale = 1.0
 	end
-	
+
 	if (not Healium.RangeCheckPeriod) then
 		Healium.RangeCheckPeriod = DefaultRangeCheckPeriod
 	end
-	
+
 	if (Healium.RangeCheckPeriod > MaxRangeCheckPeriod or Healium.RangeCheckPeriod < MinRangeCheckPeriod) then
 		Healium.RangeCheckPeriod = DefaultRangeCheckPeriod
 	end
@@ -911,170 +911,170 @@ local function InitVariables()
 	if Healium.ShowGroupFrames == nil then
 		Healium.ShowGroupFrames = { }
 	end
-	
-	if Healium.ShowToolTips == nil then 
+
+	if Healium.ShowToolTips == nil then
 		Healium.ShowToolTips = true
 	end
-	
+
 	if Healium.ShowMana == nil then
 		Healium.ShowMana = true
 	end
-	
+
 	if Healium.ShowThreat == nil then
 		Healium.ShowThreat = true
 	end
-	
+
 	if Healium.ShowRole == nil then
 		Healium.ShowRole = true
 	end
-	
+
 	if Healium.ShowIncomingHeals == nil then
 		Healium.ShowIncomingHeals = true
 	end
-	
+
 	if Healium.ShowRaidIcons == nil then
 		Healium.ShowRaidIcons = true
 	end
-	
-	if Healium.ShowPercentage == nil then 
+
+	if Healium.ShowPercentage == nil then
 		Healium.ShowPercentage = true
 	end
-	
-	if Healium.UseClassColors == nil then 
+
+	if Healium.UseClassColors == nil then
 		Healium.UseClassColors = false
 	end
 
-	if Healium.ShowBuffs == nil then 
+	if Healium.ShowBuffs == nil then
 		Healium.ShowBuffs = true
 	end
 
 	if Healium.ShowDefaultPartyFrames == nil then
 		Healium.ShowDefaultPartyFrames = false
 	end
-	
+
 	if Healium.ShowPartyFrame == nil then
 		Healium.ShowPartyFrame = true
-	end		
-	
+	end
+
 	if Healium.ShowPetsFrame == nil then
 		Healium.ShowPetsFrame = true
 	end
-	
+
 	if Healium.ShowMeFrame == nil then
 		Healium.ShowMeFrame = false
 	end
-	
+
 	if Healium.ShowTanksFrame == nil then
 		Healium.ShowTanksFrame = false
 	end
-	
+
 	if Healium.ShowDamagersFrame == nil then
 		Healium.ShowDamagersFrame = false
 	end
-	
+
 	if Healium.ShowHealersFrame == nil then
 		Healium.ShowHealersFrame = false
 	end
-	
+
 	if Healium.ShowTargetFrame == nil then
 		Healium.ShowTargetFrame = false
 	end
-	
+
 	if Healium.ShowFocusFrame == nil then
 		Healium.ShowFocusFrame = false
 	end
-	
+
 	if Healium.ShowFriendsFrame == nil then
 		Healium.ShowFriendsFrame = false
 	end
-	
+
 	if Healium.HideCloseButton == nil then
 		Healium.HideCloseButton = false
 	end
-	
+
 	if Healium.HideCaptions == nil then
 		Healium.HideCaptions = false
 	end
-	
+
 	if Healium.LockFrames == nil then
 		Healium.LockFrames = false
 	end
-	
+
 	if Healium.EnableDebufs == nil then
 		Healium.EnableDebufs = true
 	end
-	
+
 	if Healium.EnableClique == nil then
 		Healium.EnableClique = false
 	end
-	
+
 	if Healium.EnableDebufAudio == nil then
 		Healium.EnableDebufAudio = true
 	end
-	
+
 	if Healium.EnableDebufHealthbarHighlighting == nil then
 		Healium.EnableDebufHealthbarHighlighting = true
 	end
-	
-	if Healium.EnableDebufButtonHighlighting == nil then 
+
+	if Healium.EnableDebufButtonHighlighting == nil then
 		Healium.EnableDebufButtonHighlighting = true
 	end
-	
+
 	if Healium.EnableDebufHealthbarColoring == nil then
 		Healium.EnableDebufHealthbarColoring = false
 	end
 
 	if Healium.UppercaseNames == nil then
 		Healium.UppercaseNames = true
-	end	
-	
+	end
+
 	if HealiumGlobal.Friends == nil then
 		HealiumGlobal.Friends = { }
 	end
-	
+
 	if Healium.Profiles == nil then
 		Healium.Profiles = { }
 	end
 
 	-- Healium.Profiles may exist at this point, but may not be fully inited
-	local DefaultProfile = { 
+	local DefaultProfile = {
 		ButtonCount = DefaultButtonCount,
 		SpellNames = { },
 		SpellIcons = { },
 		SpellTypes = { },
 		IDs = { },
 	}
-	
+
 	if Healium.Profiles[1] == nil then
 		Healium.Profiles[1] = Healium_DeepCopy(DefaultProfile)
 	end
-	
+
 	if Healium.Profiles[2] == nil then
 		Healium.Profiles[2] = Healium_DeepCopy(DefaultProfile)
 	end
-	
+
 	if Healium.Profiles[3] == nil then
 		Healium.Profiles[3] = Healium_DeepCopy(DefaultProfile)
 	end
-	
+
 	if Healium.Profiles[4] == nil then
 		Healium.Profiles[4] = Healium_DeepCopy(DefaultProfile)
-	end	
-	
+	end
+
 	-- SpellTypes was added in 2.0
 	if Healium.Profiles[1].SpellTypes == nil then
 		Healium.Profiles[1].SpellTypes = {}
 	end
-	
+
 	if Healium.Profiles[2].SpellTypes == nil then
 		Healium.Profiles[2].SpellTypes = {}
 	end
-	
+
 	-- IDs was added in 2.0
 	if Healium.Profiles[1].IDs == nil then
 		Healium.Profiles[1].IDs = {}
 	end
-	
+
 	if Healium.Profiles[2].IDs == nil then
 		Healium.Profiles[2].IDs = {}
 	end
@@ -1085,12 +1085,12 @@ local function InitVariables()
 --	if frac ~= 0 then
 --		Healium.Profiles[1].ButtonCount = DefaultButtonCount
 --	end
-	
+
 --	_,frac = math.modf(Healium.Profiles[2].ButtonCount)
 --	if frac ~= 0 then
 --		Healium.Profiles[2].ButtonCount = DefaultButtonCount
 --	end
-	
+
 	-- remove old saved variables
 	HealiumDropDownButton = nil
 	HealiumDropDownButtonIcon = nil
@@ -1105,7 +1105,7 @@ function Healium_OnEvent(frame, event, ...)
 	-------------------------------------------------------------
     if (event == "UNIT_HEALTH") or (event == "UNIT_HEAL_PREDICTION") or (event == "UNIT_MAXHEALTH") then
 --		if (not HealiumActive) then return 0 end
-		
+
 		if Healium_Units[arg1] then
 			for _,v  in pairs(Healium_Units[arg1]) do
 				Healium_UpdateUnitHealth(arg1, v)
@@ -1122,7 +1122,7 @@ function Healium_OnEvent(frame, event, ...)
 		end
 		return
 	end
-	
+
 	if event == "UNIT_AURA" then
 		if Healium_Units[arg1] then
 			for _,v  in pairs(Healium_Units[arg1]) do
@@ -1134,7 +1134,7 @@ function Healium_OnEvent(frame, event, ...)
 		end
 		return
 	end
-	
+
 	if (event == "UNIT_THREAT_SITUATION_UPDATE") and Healium.ShowThreat then
 		if Healium_Units[arg1] then
 			for _,v  in pairs(Healium_Units[arg1]) do
@@ -1147,28 +1147,28 @@ function Healium_OnEvent(frame, event, ...)
 	if (event == "SPELL_UPDATE_COOLDOWN") and Healium.EnableCooldowns then
 		Healium_UpdateButtonCooldowns()
 		return
-	end	
-		
+	end
+
 	if event == "PLAYER_REGEN_ENABLED" then
 		for _,v in ipairs(Healium_FixNameplates) do
 			Healium_ShowHidePercentage(v)
 
-			if v.fixCreateButtons then 
+			if v.fixCreateButtons then
 				Healium_CreateButtonsForNameplate(v)
 				UpdateButtonVisibility(v)
 				v.fixCreateButtons = nil
 			end
-			
+
 			if v.fixShowMana then
 				Healium_UpdateManaBarVisibility(v)
 				v.fixShowMana = nil
 			end
 		end
-		
+
 		Healium_FixNameplates = {}
 		return
 	end
-	
+
 	if ((event == "UNIT_SPELLCAST_SENT") and ( (arg2 == ActivatePrimarySpecSpellName) or (arg2 == ActivateSecondarySpecSpellName))  ) then
 --		DEFAULT_CHAT_FRAME:AddMessage("Healium Debug: Respecing Start")
 		frame.Respecing = true
@@ -1179,51 +1179,51 @@ function Healium_OnEvent(frame, event, ...)
 --		DEFAULT_CHAT_FRAME:AddMessage("Healium Debug: Respecing Interrupt or succeeded")
 		frame.Respecing = nil
 	end
-	
+
 	-- This is not sent during initialization during a reload
 	if (event == "PLAYER_TALENT_UPDATE") then
 		Healium_DebugPrint("PLAYER_TALENT_UPDATE")
-		frame.Respecing = nil	
-		
-		-- mainly to reset cures.  
-		Healium_InitSpells(HealiumClass, HealiumRace) 
+		frame.Respecing = nil
+
+		-- mainly to reset cures.
+		Healium_InitSpells(HealiumClass, HealiumRace)
 
 		Healium_UpdateSpells()
 		Healium_UpdateButtons()
 		Healium_Update_ConfigPanel()
 		return
 	end
-	
+
 
 	if ((event == "SPELLS_CHANGED") and (not frame.Respecing)) then
 		Healium_DebugPrint("SPELLS_CHANGED")
 		-- Populate the Healium_Spell Table with ID and Icon data.
 		Healium_UpdateSpells()
 	end
-	
+
 	if ((event == "PLAYER_ENTERING_WORLD") and (not frame.Respecing)) then
 		stable = true
 		Healium_DebugPrint("PLAYER_ENTERING_WORLD")
 		-- Populate the Healium_Spell Table with ID and Icon data.
 		Healium_UpdateSpells()
-		
+
 		Healium_ToggleAllFrames()
 		Healium_ToggleAllFrames()
 	end
-	
+
 		-- Do not use this event for anything meaningful (see comment above ADDON_LOADED for reason)
---[[	
+--[[
 	if (event == "VARIABLES_LOADED") then
 		Healium_DebugPrint("VARIABLES_LOADED")
 		return
 	end
-	
-	if (event == "PLAYER_ALIVE") then 
+
+	if (event == "PLAYER_ALIVE") then
 		Healium_DebugPrint("PLAYER_ALIVE")
 		return
 	end
 --]]
-	
+
 	if event == "UNIT_DISPLAYPOWER" then
 		if Healium_Units[arg1] then
 			for i,v  in pairs(Healium_Units[arg1]) do
@@ -1233,54 +1233,54 @@ function Healium_OnEvent(frame, event, ...)
 
 		return
 	end
-	
+
 	if (event == "RAID_TARGET_UPDATE") and Healium.ShowRaidIcons then
 		Healium_UpdateRaidIcons()
-		return		
+		return
 	end
-	
+
 	if event == "UNIT_NAME_UPDATE" then
 		if Healium_Units[arg1] then
 			local name = strupper(UnitName(arg1))
 			for _,v  in pairs(Healium_Units[arg1]) do
-				v.HealthBar.name:SetText(name)			
+				v.HealthBar.name:SetText(name)
 			end
 		end
 		return
 	end
-	
+
 	if (event == "GROUP_ROSTER_UPDATE") and Healium.ShowRole then
 		Healium_UpdateRoles()
 		return
 	end
-	
+
 	if (event == "PLAYER_TARGET_CHANGED") and Healium.ShowTargetFrame then
 		Healium_DebugPrint("PLAYER_TARGET_CHANGED")
 		Healium_UpdateTargetFrame()
 		return
 	end
-	
+
 	if (event == "PLAYER_FOCUS_CHANGED") and Healium.ShowFocusFrame then
 		Healium_DebugPrint("PLAYER_FOCUS_CHANGED")
 		Healium_UpdateFocusFrame()
 		return
 	end
-	
+
 	-- Use this ADDON_LOADED event instead of VARIABLES_LOADED.
 	-- ADDON_LOADED will not be called until the variables are loaded.
 	-- VARIABLES_LOADED's order can no longer be relied upon. (it kind of seems random to me)
 	if ((event == "ADDON_LOADED") and (string.lower(arg1) == string.lower(Healium_AddonName))) then
-		Healium_DebugPrint("ADDON_LOADED")  	
+		Healium_DebugPrint("ADDON_LOADED")
 		InitVariables()
-		Healium_InitSpells(HealiumClass, HealiumRace) 		
-		Healium_InitDebuffSound()		
+		Healium_InitSpells(HealiumClass, HealiumRace)
+		Healium_InitDebuffSound()
 		Healium_CreateMiniMapButton()
 		Healium_CreateConfigPanel(HealiumClass, AddonVersion)
 		Healium_InitSlashCommands()
-		Healium_InitMenu()		
+		Healium_InitMenu()
 		Healium_CreateUnitFrames()
-		Healium_SetScale()		
-		Healium_UpdatePercentageVisibility()		
+		Healium_SetScale()
+		Healium_UpdatePercentageVisibility()
 		Healium_UpdateClassColors()
 		Healium_ShowHidePartyFrame()
 		Healium_ShowHidePetsFrame()
@@ -1298,17 +1298,17 @@ function Healium_OnEvent(frame, event, ...)
 		Healium_UpdateShowRole()
 		Healium_UpdateShowIncomingHeals()
 		Healium_UpdateShowRaidIcons()
-		
+
 		for i=1, 8, 1 do
 			Healium_ShowHideGroupFrame(i)
 		end
-		
-		Healium_UpdateButtons()		
-		
+
+		Healium_UpdateButtons()
+
 		LoadedTime = GetTime()
-		
+
 		return
-	end	
+	end
 end
 
 function Healium_getBuffIndex(unitName, spellName)
