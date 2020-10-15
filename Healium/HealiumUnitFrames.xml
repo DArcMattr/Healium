@@ -3,7 +3,7 @@
  xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
  
 <!-- The main frame template -->	
-	<Frame name="HealiumUnitFrameTemplate" virtual="true" movable="true" parent="UIParent" hidden="false" enableMouse="true">
+	<Frame name="HealiumUnitFrameTemplate" virtual="true" movable="true" parent="UIParent" hidden="false" enableMouse="true" inherits="BackgropTemplate">
         <Size>
             <AbsDimension x="120" y="30"/>
         </Size>
@@ -74,7 +74,7 @@
 
 	<!-- A template for the healing buttons -->	
 	<!-- This can't have hidden="true" or it will fail to create unit frames during combat. -->
-	<Button name="HealiumHealButtonTemplate" inherits="SecureActionButtonTemplate" virtual="true" enableMouse="true">
+	<Button name="HealiumHealButtonTemplate" inherits="SecureActionButtonTemplate, BackdropTemplate" virtual="true" enableMouse="true">
 		<Size x="28" y ="28"/>
 		<Layers>
 			<Layer level="BACKGROUND">
@@ -129,7 +129,7 @@
 			!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 -->			
-	<Button name="HealiumUnitFrames_ButtonTemplate" virtual="true" movable="true" enableMouse="true" inherits="SecureActionButtonTemplate">
+	<Button name="HealiumUnitFrames_ButtonTemplate" virtual="true" movable="true" enableMouse="true" inherits="SecureActionButtonTemplate, BackdropTemplate">
 		<Size x="120" y="28"/>
 		<Backdrop edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true">
 			<EdgeSize>
