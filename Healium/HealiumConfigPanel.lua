@@ -292,7 +292,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	panel.cancel = function (frame) MY_VARIABLE = frame.originalValue end    -- [[ When the player clicks cancel, set the current setting to the original value ]] --
 	InterfaceOptions_AddCategory(panel)
 
-	local scrollframe = CreateFrame("ScrollFrame", "HealiumPanelScrollFrame", panel, "UIPanelScrollFrameTemplate, BackdropTemplate")
+	local scrollframe = CreateFrame("ScrollFrame", "HealiumPanelScrollFrame", panel, "UIPanelScrollFrameTemplate")
 	local framewidth = InterfaceOptionsFramePanelContainer:GetWidth()
 	local frameheight = InterfaceOptionsFramePanelContainer:GetHeight()
 	scrollframe:SetPoint("TOPLEFT", panel, "TOPLEFT", 10, -25)
@@ -301,12 +301,6 @@ function Healium_CreateConfigPanel(Class, Version)
 	scrollframe:Show()
 
     scrollframe.scrollbar = _G["HealiumPanelScrollFrameScrollBar"]
-    scrollframe.scrollbar:SetBackdrop({
-        edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-        edgeSize = 8,
-        tileSize = 32,
-        insets = { left = 0, right =0, top =5, bottom = 5 }})
-
 
 	local scrollchild = CreateFrame("Frame", "$parentScrollChild", scrollframe, BackdropTemplateMixin and "BackdropTemplate")
 	scrollframe:SetScrollChild(scrollchild)
@@ -433,7 +427,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- Slider for controlling how many buttons to show
-    HealiumMaxButtonSlider = CreateFrame("Slider","$parentMaxButtonSlider",scrollchild,"OptionsSliderTemplate, BackdropTemplate")
+    HealiumMaxButtonSlider = CreateFrame("Slider","$parentMaxButtonSlider",scrollchild, "OptionsSliderTemplate")
     HealiumMaxButtonSlider:SetWidth(128)
     HealiumMaxButtonSlider:SetHeight(16)
 

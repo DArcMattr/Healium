@@ -38,7 +38,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parentColorSwatch" hidden="true">
+			<Button name="$parentColorSwatch" hidden="true" inherits="BackdropTemplate">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -83,7 +83,7 @@
 				</Scripts>
 				<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 			</Button>
-			<Button name="$parentExpandArrow" hidden="true">
+			<Button name="$parentExpandArrow" hidden="true" inherits="BackdropTemplate">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -112,7 +112,7 @@
 				</Scripts>
 				<NormalTexture file="Interface\ChatFrame\ChatFrameExpandArrow"/>
 			</Button>
-			<Button name="$parentInvisibleButton" hidden="true">
+			<Button name="$parentInvisibleButton" hidden="true" inherits="BackdropTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT"/>
 					<Anchor point="BOTTOMLEFT"/>
@@ -192,10 +192,10 @@
 		<HighlightFont style="GameFontHighlightSmallLeft"/>
 		<DisabledFont style="GameFontDisableSmallLeft"/>
 	</Button>
-	
-	<Button name="Lib_UIDropDownListTemplate" hidden="true" frameStrata="DIALOG" enableMouse="true" virtual="true">
+
+	<Button name="Lib_UIDropDownListTemplate" hidden="true" frameStrata="DIALOG" enableMouse="true" virtual="true" inherits="BackdropTemplate">
 		<Frames>
-			<Frame name="$parentBackdrop" setAllPoints="true">
+			<Frame name="$parentBackdrop" setAllPoints="true" inherits="BackdropTemplate">
 				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
 					<BackgroundInsets>
 						<AbsInset left="11" right="12" top="12" bottom="9"/>
@@ -208,7 +208,7 @@
 					</EdgeSize>
 				</Backdrop>
 			</Frame>
-			<Frame name="$parentMenuBackdrop" setAllPoints="true">
+			<Frame name="$parentMenuBackdrop" setAllPoints="true" inherits="BackdropTemplate">
 				<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
 					<EdgeSize>
 						<AbsValue val="16"/>
@@ -227,14 +227,14 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Button name="$parentButton1" inherits="Lib_UIDropDownMenuButtonTemplate" id="1"/>
-			<Button name="$parentButton2" inherits="Lib_UIDropDownMenuButtonTemplate" id="2"/>
-			<Button name="$parentButton3" inherits="Lib_UIDropDownMenuButtonTemplate" id="3"/>
-			<Button name="$parentButton4" inherits="Lib_UIDropDownMenuButtonTemplate" id="4"/>
-			<Button name="$parentButton5" inherits="Lib_UIDropDownMenuButtonTemplate" id="5"/>
-			<Button name="$parentButton6" inherits="Lib_UIDropDownMenuButtonTemplate" id="6"/>
-			<Button name="$parentButton7" inherits="Lib_UIDropDownMenuButtonTemplate" id="7"/>
-			<Button name="$parentButton8" inherits="Lib_UIDropDownMenuButtonTemplate" id="8"/>
+			<Button name="$parentButton1" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="1"/>
+			<Button name="$parentButton2" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="2"/>
+			<Button name="$parentButton3" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="3"/>
+			<Button name="$parentButton4" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="4"/>
+			<Button name="$parentButton5" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="5"/>
+			<Button name="$parentButton6" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="6"/>
+			<Button name="$parentButton7" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="7"/>
+			<Button name="$parentButton8" inherits="Lib_UIDropDownMenuButtonTemplate, BackdropTemplate" id="8"/>
 		</Frames>
 		<Scripts>
 			<OnClick>
@@ -268,8 +268,8 @@
 			</OnHide>
 		</Scripts>
 	</Button>
-	
-	<Frame name="Lib_UIDropDownMenuTemplate" virtual="true">
+
+	<Frame name="Lib_UIDropDownMenuTemplate" virtual="true" inherits="BackdropTemplate">
 		<Size>
 			<AbsDimension x="40" y="32"/>
 		</Size>
@@ -333,7 +333,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parentButton"  motionScriptsWhileDisabled="true" >
+			<Button name="$parentButton"  motionScriptsWhileDisabled="true" inherits="BackdropTemplate">
 				<Size>
 					<AbsDimension x="24" y="24"/>
 				</Size>
