@@ -44,3 +44,12 @@ Healium_DropDownList = {
 	edgeSize = 32,
 	insets = { left = 11, right = 12, top = 12, bottom = 9 }
 }
+
+Healium_DropDownListBorder = {
+	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
+	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	tile = true,
+	tileSize = 16,
+	edgeSize = 16,
+	insets = { left = 5, right = 5, top = 5, bottom = 4 }
+}
