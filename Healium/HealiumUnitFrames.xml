@@ -20,17 +20,9 @@
 					<Anchor point="CENTER">
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground"  edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-					<EdgeSize>
-						<AbsValue val="16"/>
-					</EdgeSize>
-				   <TileSize>
-					  <AbsValue val="32"/>
-				   </TileSize>
-				   <BackgroundInsets>
-					  <AbsInset left="5" right="5" top="5" bottom="5"/>
-				   </BackgroundInsets>
-				</Backdrop>
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="Healium_Caption" type="global" />
+				</KeyValues>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString parentKey="Caption" inherits="GameFontNormal">
@@ -92,14 +84,9 @@
 				<Anchors>
 					<Anchor point="CENTER"></Anchor>
 				</Anchors>
-					<Backdrop edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true">
-					<EdgeSize>
-						<AbsValue val="28"/>
-					</EdgeSize>
-				   <BackgroundInsets>
-					  <AbsInset left="0" right="0" top="0" bottom="0"/>
-				   </BackgroundInsets>
-				</Backdrop>
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="Healium_HealButton" type="global" />
+				</KeyValues>
 			</Frame>
 		</Frames>
 		<Attributes>
@@ -131,17 +118,9 @@
 -->
 	<Button name="HealiumUnitFrames_ButtonTemplate" virtual="true" movable="true" enableMouse="true" inherits="SecureActionButtonTemplate, BackdropTemplate">
 		<Size x="120" y="28"/>
-		<Backdrop edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true">
-			<EdgeSize>
-				<AbsValue val="10"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val="16"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left="4" right="4" top="4" bottom="4"/>
-			</BackgroundInsets>
-		</Backdrop>
+		<KeyValues>
+			<KeyValue key="backdropInfo" value="Healium_Button" type="global" />
+		</KeyValues>
 		<Attributes>
 			<Attribute name="type1" value="target" />
 		</Attributes>
@@ -309,14 +288,9 @@
 				<Anchors>
 					<Anchor point="CENTER"></Anchor>
 				</Anchors>
-				<Backdrop edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true">
-					<EdgeSize>
-						<AbsValue val="24"/>
-					</EdgeSize>
-				   <BackgroundInsets>
-					  <AbsInset left="0" right="0" top="0" bottom="0"/>
-				   </BackgroundInsets>
-				</Backdrop>
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="Healium_CurseBar" type="global" />
+				</KeyValues>
 				<Scripts>
 					<OnShow>
 						self:SetFrameLevel(self:GetParent():GetFrameLevel() + 4);
@@ -328,14 +302,9 @@
 				<Anchors>
 					<Anchor point="CENTER"></Anchor>
 				</Anchors>
-					<Backdrop edgeFile="Interface/Tooltips/UI-Tooltip-Border" tile="true" >
-					<EdgeSize>
-						<AbsValue val="12"/>
-					</EdgeSize>
-				   <BackgroundInsets>
-					  <AbsInset left="0" right="0" top="0" bottom="0"/>
-				   </BackgroundInsets>
-				</Backdrop>
+				<KeyValues>
+					<KeyValue key="backdropInfo" value="Healium_AggroBar" type="global" />
+				</KeyValues>
 				<Scripts>
 					<OnShow>
 						self:SetFrameLevel(self:GetParent():GetFrameLevel() + 4);

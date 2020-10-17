@@ -11,6 +11,7 @@ HealiumSlashCommands.lua
 HealiumConfigPanel.lua
 HealiumMinimapButton.lua
 Healium.lua
+HealiumGlobals.lua
 HealiumMenu.lua
 Healium.xml
 HealiumUnitFrames.xml
