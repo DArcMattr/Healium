@@ -250,7 +250,7 @@ end
 
 
 local function CreateCheck(checkName, scrollchild, parent, tip, text)
-	local check = CreateFrame("CheckButton", checkName,  scrollchild, "OptionsCheckButtonTemplate, BackdropTemplate")
+	local check = CreateFrame("CheckButton", checkName,  scrollchild, "OptionsCheckButtonTemplate")
 	check:SetPoint("TOPLEFT", parent, "BOTTOMLEFT", 0, 0)
 	check.tooltipText = tip
 	check.Text = check:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -286,7 +286,7 @@ function Healium_CreateConfigPanel(Class, Version)
 --	Healium_DebugPrint("Begin Healium_CreateAddonOptionFrame()")
 	local Profile = Healium_GetProfile()
 
-	local panel = CreateFrame("Frame", nil, UIParent, BackdropTemplateMixin and "BackdropTemplate")
+	local panel = CreateFrame("Frame", nil, UIParent)
 	panel.name = Healium_AddonName
 	panel.okay = function (frame)frame.originalValue = MY_VARIABLE end    -- [[ When the player clicks okay, set the original value to the current setting ]] --
 	panel.cancel = function (frame) MY_VARIABLE = frame.originalValue end    -- [[ When the player clicks cancel, set the current setting to the original value ]] --
@@ -302,7 +302,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
     scrollframe.scrollbar = _G["HealiumPanelScrollFrameScrollBar"]
 
-	local scrollchild = CreateFrame("Frame", "$parentScrollChild", scrollframe, BackdropTemplateMixin and "BackdropTemplate")
+	local scrollchild = CreateFrame("Frame", "$parentScrollChild", scrollframe)
 	scrollframe:SetScrollChild(scrollchild)
 
 	-- The Height and Width here are important.  The Width will control placement of the class icon since it attaches to TOPRIGHT of scrollchild.
@@ -323,7 +323,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	TitleSubText:SetTextColor(1,1,1,1)
 
 	-- Create the Class Icon
-  	local HealiumClassIcon = CreateFrame("Frame", "HealiumClassIcon" ,scrollchild, BackdropTemplateMixin and "BackdropTemplate")
+  	local HealiumClassIcon = CreateFrame("Frame", "HealiumClassIcon" ,scrollchild)
 	HealiumClassIcon:SetPoint("TOPRIGHT",-20,0)
 	HealiumClassIconTexture = HealiumClassIcon:CreateTexture(nil, "BACKGROUND")
 	HealiumClassIconTexture:SetAllPoints()
@@ -339,7 +339,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- ToolTips Check Button
-    local TooltipsCheck = CreateFrame("CheckButton","$parentShowTooltipCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local TooltipsCheck = CreateFrame("CheckButton","$parentShowTooltipCheckButton",scrollchild,"OptionsCheckButtonTemplate")
 	TooltipsCheck:SetPoint("TOPLEFT",5,-70)
 
     TooltipsCheck.Text = TooltipsCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -450,7 +450,7 @@ function Healium_CreateConfigPanel(Class, Version)
     HealiumMaxButtonSlider:Show()
 
     -- Slider for Scaling
-    local ScaleSlider = CreateFrame("Slider","HealiumScaleSlider",scrollchild,"OptionsSliderTemplate, BackdropTemplate")
+    local ScaleSlider = CreateFrame("Slider","HealiumScaleSlider",scrollchild,"OptionsSliderTemplate")
     ScaleSlider:SetWidth(100)
     ScaleSlider:SetHeight(16)
 
@@ -483,7 +483,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	ShowFramesTitleSubText:SetTextColor(1,1,1,1)
 
 	-- Show Party Check
-    Healium_ShowPartyCheck = CreateFrame("CheckButton","$parentShowPartyCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    Healium_ShowPartyCheck = CreateFrame("CheckButton","$parentShowPartyCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     Healium_ShowPartyCheck:SetPoint("TOPLEFT",ShowFramesTitleSubText, "BOTTOMLEFT", 0, -10)
 	Healium_ShowPartyCheck.tooltipText = "Shows the Party " .. Healium_AddonColoredName .. " frame."
     Healium_ShowPartyCheck.Text = Healium_ShowPartyCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -639,7 +639,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- Enable Debuffs check button
-    local EnableDebuffsCheck = CreateFrame("CheckButton","$parentEnableDebuffsCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local EnableDebuffsCheck = CreateFrame("CheckButton","$parentEnableDebuffsCheckButton",scrollchild,"OptionsCheckButtonTemplate")
 	EnableDebuffsCheck.children = { }
     EnableDebuffsCheck:SetPoint("TOPLEFT", DebuffWarningsSubText, "BOTTOMLEFT", 0, -10)
 
@@ -651,7 +651,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	EnableDebuffsCheck.tooltipText = "Enables debuff warnings"
 
 	-- Enable Debuff Healthbar coloring check button
-	local EnableDebufHealthbarColoringCheck	= CreateFrame("CheckButton","$parentEnableDebuffHealthbarColoringCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+	local EnableDebufHealthbarColoringCheck	= CreateFrame("CheckButton","$parentEnableDebuffHealthbarColoringCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     EnableDebufHealthbarColoringCheck:SetPoint("TOPLEFT", EnableDebuffsCheck, "BOTTOMLEFT", 20, 0)
 
     EnableDebufHealthbarColoringCheck.Text = EnableDebufHealthbarColoringCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -664,7 +664,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- Enable Debuff Healthbar highlighting check button
-    local EnableDebuffHealthbarHighlightingCheck = CreateFrame("CheckButton","$parentEnableDebuffHealthbarHighlightingCheck",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local EnableDebuffHealthbarHighlightingCheck = CreateFrame("CheckButton","$parentEnableDebuffHealthbarHighlightingCheck",scrollchild,"OptionsCheckButtonTemplate")
     EnableDebuffHealthbarHighlightingCheck:SetPoint("TOPLEFT", EnableDebufHealthbarColoringCheck, "BOTTOMLEFT", 0, 0)
 
     EnableDebuffHealthbarHighlightingCheck.Text = EnableDebuffHealthbarHighlightingCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -677,7 +677,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- Enable Debuff Button highlighting check button
-    local EnableDebuffButtonHighlightingCheck = CreateFrame("CheckButton","$parentEnableDebuffButtonHighlightingCheck",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local EnableDebuffButtonHighlightingCheck = CreateFrame("CheckButton","$parentEnableDebuffButtonHighlightingCheck",scrollchild,"OptionsCheckButtonTemplate")
     EnableDebuffButtonHighlightingCheck:SetPoint("TOPLEFT", EnableDebuffHealthbarHighlightingCheck, "BOTTOMLEFT", 0, 0)
 
     EnableDebuffButtonHighlightingCheck.Text = EnableDebuffButtonHighlightingCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -689,7 +689,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	EnableDebuffButtonHighlightingCheck.tooltipText = "Enables highlighting of buttons which have been assigned a spell that can cure a debuff on a player"
 
 	-- Enable Debuff Audio check button
-    local EnableDebuffAudioCheck = CreateFrame("CheckButton","$parentEnableDebuffAudioCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local EnableDebuffAudioCheck = CreateFrame("CheckButton","$parentEnableDebuffAudioCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     EnableDebuffAudioCheck:SetPoint("TOPLEFT", EnableDebuffButtonHighlightingCheck, "BOTTOMLEFT", 0, 0)
 
     EnableDebuffAudioCheck.Text = EnableDebuffAudioCheck:CreateFontString(nil, "BACKGROUND","GameFontNormal")
@@ -710,7 +710,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	table.insert(EnableDebuffsCheck.children, SoundDropDown.Text)
 
 	-- Play sound button
-	local PlayButton = CreateFrame("Button", "$parentPlaySoundButton", scrollchild, "UIPanelButtonTemplate, BackdropTemplate")
+	local PlayButton = CreateFrame("Button", "$parentPlaySoundButton", scrollchild, "UIPanelButtonTemplate")
 	PlayButton:SetText("Play")
 	PlayButton:SetWidth(54)
 	PlayButton:SetHeight(22)
@@ -730,7 +730,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	UpdatingTitleSubText:SetTextColor(1,1,1,1)
 
     -- EnableColldowns Check Button
-    local EnableCooldownsCheck = CreateFrame("CheckButton","$parentEnableCooldownsCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local EnableCooldownsCheck = CreateFrame("CheckButton","$parentEnableCooldownsCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     EnableCooldownsCheck:SetPoint("TOPLEFT", UpdatingTitleSubText, "BOTTOMLEFT", 0, -10)
     EnableCooldownsCheck.tooltipText = "Enables cooldown animations on the " .. Healium_AddonColoredName .. " buttons."
 
@@ -741,7 +741,7 @@ function Healium_CreateConfigPanel(Class, Version)
 
 
 	-- RangeCheck Check Button
-    local RangeCheckCheck = CreateFrame("CheckButton","$parentRangeCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+    local RangeCheckCheck = CreateFrame("CheckButton","$parentRangeCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     RangeCheckCheck:SetPoint("TOPLEFT",EnableCooldownsCheck, "BOTTOMLEFT", 0, 0)
     RangeCheckCheck.tooltipText = "Enables range checks on the " .. Healium_AddonColoredName .. " buttons."
 
@@ -751,7 +751,7 @@ function Healium_CreateConfigPanel(Class, Version)
     RangeCheckCheck:SetScript("OnClick",RangeCheckCheck_OnClick)
 
 	-- RangeCheck Slider
-	local RangeCheckSlider = CreateFrame("Slider","$parentRangeCheckSlider",scrollchild,"OptionsSliderTemplate, BackdropTemplate")
+	local RangeCheckSlider = CreateFrame("Slider","$parentRangeCheckSlider",scrollchild,"OptionsSliderTemplate")
     RangeCheckSlider:SetWidth(180)
     RangeCheckSlider:SetHeight(16)
 
@@ -772,7 +772,7 @@ function Healium_CreateConfigPanel(Class, Version)
     RangeCheckSlider:SetScript("OnValueChanged", RangeCheckSlider_OnValueChanged)
 
 	-- ShowBuffs check
-	local ShowBuffsCheck = CreateFrame("CheckButton","$parentShowBuffsCheckButton",scrollchild,"OptionsCheckButtonTemplate, BackdropTemplate")
+	local ShowBuffsCheck = CreateFrame("CheckButton","$parentShowBuffsCheckButton",scrollchild,"OptionsCheckButtonTemplate")
     ShowBuffsCheck:SetPoint("TOPLEFT",RangeCheckCheck, "BOTTOMLEFT", 0, 0)
     ShowBuffsCheck.tooltipText = "Shows the buffs and HOTs you have personally cast on the player to the left of the healthbar.  It will only show spells that are configured in " .. Healium_AddonColoredName .. "."
 
@@ -782,7 +782,7 @@ function Healium_CreateConfigPanel(Class, Version)
 	ShowBuffsCheck:SetScript("OnClick", ShowBuffsCheck_OnClick);
 
     -- About Frame
-    local AboutTitle = CreateFrame("Frame","",scrollchild, BackdropTemplateMixin and "BackdropTemplate")
+    local AboutTitle = CreateFrame("Frame","",scrollchild)
 --    AboutTitle:SetFrameStrata("TOOLTIP")
     AboutTitle:SetWidth(160)
     AboutTitle:SetHeight(20)

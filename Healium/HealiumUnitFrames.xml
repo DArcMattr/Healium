@@ -1,16 +1,17 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
-
-<!-- The main frame template -->
+<Ui 
+		xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd"
+>
+	<!-- The main frame template -->
 	<Frame name="HealiumUnitFrameTemplate" virtual="true" movable="true" parent="UIParent" hidden="false" enableMouse="true" inherits="BackdropTemplate">
-        <Size>
-            <AbsDimension x="120" y="30"/>
-        </Size>
-        <Anchors>
-            <Anchor point="CENTER">
-            </Anchor>
-        </Anchors>
+		<Size>
+			<AbsDimension x="120" y="30"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+			</Anchor>
+		</Anchors>
 		<Frames>
 			<Frame parentKey="CaptionBar" enableMouse="true" hidden="false" inherits="BackdropTemplate">
 				<Size>
@@ -62,11 +63,9 @@
 			<OnHide>HealiumUnitFrames_ShowHideFrame(self, false)</OnHide>
 		</Scripts>
 	</Frame>
-
-
 	<!-- A template for the healing buttons -->
 	<!-- This can't have hidden="true" or it will fail to create unit frames during combat. -->
-	<Button name="HealiumHealButtonTemplate" inherits="SecureActionButtonTemplate, BackdropTemplate" virtual="true" enableMouse="true">
+	<Button name="HealiumHealButtonTemplate" inherits="SecureActionButtonTemplate" virtual="true" enableMouse="true">
 		<Size x="28" y ="28"/>
 		<Layers>
 			<Layer level="BACKGROUND">
